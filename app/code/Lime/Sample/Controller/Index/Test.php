@@ -1,21 +1,29 @@
 <?php
 namespace Lime\Sample\Controller\Index;
 
-class Test extends \Magento\Framework\App\Action\Action
+use \Magento\Framework\App\Action\HttpGetActionInterface;
+use \Magento\Framework\View\Result\PageFactory;
+
+class Test implements HttpGetActionInterface 
 {
-	protected $_pageFactory;
+  /**
+     * @var \Magento\Framework\View\Result\PageFactory
+     */
+    protected $resultPageFactory;
 
-	public function __construct(
-		\Magento\Framework\App\Action\Context $context,
-		\Magento\Framework\View\Result\PageFactory $pageFactory)
-	{
-		$this->_pageFactory = $pageFactory;
-		return parent::__construct($context);
-	}
+    /**
+     * @param PageFactory $resultPageFactory
+     */
+    public function __construct(PageFactory $resultPageFactory) {
+        $this->resultPageFactory = $resultPageFactory;
+    }
 
-	public function execute()
-	{
-		echo "Hello World";
-		exit;
-	}
+    /**
+     * Prints the information
+     * @return Page
+     */
+    public function execute()
+    {
+        return $this->resultPageFactory->create();
+    }
 }
